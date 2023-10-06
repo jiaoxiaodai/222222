@@ -1,0 +1,2437 @@
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JacksonAnnotation.class */
+public @interface JacksonAnnotation {
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JacksonAnnotationsInside.class */
+public @interface JacksonAnnotationsInside {
+}package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.Annotation;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JacksonAnnotationValue.class */
+public interface JacksonAnnotationValue<A extends Annotation> {
+    Class<A> valueFor();
+}
+package com.fasterxml.jackson.annotation;
+
+import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JacksonInject.class */
+public @interface JacksonInject {
+    String value() default "";
+
+    OptBoolean useInput() default OptBoolean.DEFAULT;
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JacksonInject$Value.class */
+    public static class Value implements JacksonAnnotationValue<JacksonInject>, Serializable {
+        private static final long serialVersionUID = 1;
+        protected static final Value EMPTY = new Value(null, null);
+        protected final Object _id;
+        protected final Boolean _useInput;
+
+        protected Value(Object id, Boolean useInput) {
+            this._id = id;
+            this._useInput = useInput;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.JacksonAnnotationValue
+        public Class<JacksonInject> valueFor() {
+            return JacksonInject.class;
+        }
+
+        public static Value empty() {
+            return EMPTY;
+        }
+
+        public static Value construct(Object id, Boolean useInput) {
+            if (JsonProperty.USE_DEFAULT_NAME.equals(id)) {
+                id = null;
+            }
+            if (_empty(id, useInput)) {
+                return EMPTY;
+            }
+            return new Value(id, useInput);
+        }
+
+        public static Value from(JacksonInject src) {
+            if (src == null) {
+                return EMPTY;
+            }
+            return construct(src.value(), src.useInput().asBoolean());
+        }
+
+        public static Value forId(Object id) {
+            return construct(id, null);
+        }
+
+        public Value withId(Object id) {
+            if (id == null) {
+                if (this._id == null) {
+                    return this;
+                }
+            } else if (id.equals(this._id)) {
+                return this;
+            }
+            return new Value(id, this._useInput);
+        }
+
+        public Value withUseInput(Boolean useInput) {
+            if (useInput == null) {
+                if (this._useInput == null) {
+                    return this;
+                }
+            } else if (useInput.equals(this._useInput)) {
+                return this;
+            }
+            return new Value(this._id, useInput);
+        }
+
+        public Object getId() {
+            return this._id;
+        }
+
+        public Boolean getUseInput() {
+            return this._useInput;
+        }
+
+        public boolean hasId() {
+            return this._id != null;
+        }
+
+        public boolean willUseInput(boolean defaultSetting) {
+            return this._useInput == null ? defaultSetting : this._useInput.booleanValue();
+        }
+
+        public String toString() {
+            return String.format("JacksonInject.Value(id=%s,useInput=%s)", this._id, this._useInput);
+        }
+
+        public int hashCode() {
+            int h = 1;
+            if (this._id != null) {
+                h = 1 + this._id.hashCode();
+            }
+            if (this._useInput != null) {
+                h += this._useInput.hashCode();
+            }
+            return h;
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (o != null && o.getClass() == getClass()) {
+                Value other = (Value) o;
+                if (OptBoolean.equals(this._useInput, other._useInput)) {
+                    if (this._id == null) {
+                        return other._id == null;
+                    }
+                    return this._id.equals(other._id);
+                }
+                return false;
+            }
+            return false;
+        }
+
+        private static boolean _empty(Object id, Boolean useInput) {
+            return id == null && useInput == null;
+        }
+    }.
+.
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonAlias.class */
+public @interface JsonAlias {
+    String[] value() default {};
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonAnyGetter.class */
+public @interface JsonAnyGetter {
+    boolean enabled() default true;
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonAnySetter.class */
+public @interface JsonAnySetter {
+    boolean enabled() default true;
+}
+package com.fasterxml.jackson.annotation;
+
+import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Member;
+import java.lang.reflect.Modifier;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonAutoDetect.class */
+public @interface JsonAutoDetect {
+    Visibility getterVisibility() default Visibility.DEFAULT;
+
+    Visibility isGetterVisibility() default Visibility.DEFAULT;
+
+    Visibility setterVisibility() default Visibility.DEFAULT;
+
+    Visibility creatorVisibility() default Visibility.DEFAULT;
+
+    Visibility fieldVisibility() default Visibility.DEFAULT;
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonAutoDetect$Visibility.class */
+    public enum Visibility {
+        ANY,
+        NON_PRIVATE,
+        PROTECTED_AND_PUBLIC,
+        PUBLIC_ONLY,
+        NONE,
+        DEFAULT;
+
+        /* JADX WARN: Can't fix incorrect switch cases order, some code will duplicate */
+        public boolean isVisible(Member m) {
+            switch (this) {
+                case ANY:
+                    return true;
+                case NONE:
+                    return false;
+                case NON_PRIVATE:
+                    return !Modifier.isPrivate(m.getModifiers());
+                case PROTECTED_AND_PUBLIC:
+                    if (Modifier.isProtected(m.getModifiers())) {
+                        return true;
+                    }
+                    break;
+                case PUBLIC_ONLY:
+                    break;
+                default:
+                    return false;
+            }
+            return Modifier.isPublic(m.getModifiers());
+        }
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonAutoDetect$Value.class */
+    public static class Value implements JacksonAnnotationValue<JsonAutoDetect>, Serializable {
+        private static final long serialVersionUID = 1;
+        private static final Visibility DEFAULT_FIELD_VISIBILITY = Visibility.PUBLIC_ONLY;
+        protected static final Value DEFAULT = new Value(DEFAULT_FIELD_VISIBILITY, Visibility.PUBLIC_ONLY, Visibility.PUBLIC_ONLY, Visibility.ANY, Visibility.PUBLIC_ONLY);
+        protected static final Value NO_OVERRIDES = new Value(Visibility.DEFAULT, Visibility.DEFAULT, Visibility.DEFAULT, Visibility.DEFAULT, Visibility.DEFAULT);
+        protected final Visibility _fieldVisibility;
+        protected final Visibility _getterVisibility;
+        protected final Visibility _isGetterVisibility;
+        protected final Visibility _setterVisibility;
+        protected final Visibility _creatorVisibility;
+
+        private Value(Visibility fields, Visibility getters, Visibility isGetters, Visibility setters, Visibility creators) {
+            this._fieldVisibility = fields;
+            this._getterVisibility = getters;
+            this._isGetterVisibility = isGetters;
+            this._setterVisibility = setters;
+            this._creatorVisibility = creators;
+        }
+
+        public static Value defaultVisibility() {
+            return DEFAULT;
+        }
+
+        public static Value noOverrides() {
+            return NO_OVERRIDES;
+        }
+
+        public static Value from(JsonAutoDetect src) {
+            return construct(src.fieldVisibility(), src.getterVisibility(), src.isGetterVisibility(), src.setterVisibility(), src.creatorVisibility());
+        }
+
+        public static Value construct(PropertyAccessor acc, Visibility visibility) {
+            Visibility fields = Visibility.DEFAULT;
+            Visibility getters = Visibility.DEFAULT;
+            Visibility isGetters = Visibility.DEFAULT;
+            Visibility setters = Visibility.DEFAULT;
+            Visibility creators = Visibility.DEFAULT;
+            switch (acc) {
+                case CREATOR:
+                    creators = visibility;
+                    break;
+                case FIELD:
+                    fields = visibility;
+                    break;
+                case GETTER:
+                    getters = visibility;
+                    break;
+                case IS_GETTER:
+                    isGetters = visibility;
+                    break;
+                case SETTER:
+                    setters = visibility;
+                    break;
+                case ALL:
+                    creators = visibility;
+                    setters = visibility;
+                    isGetters = visibility;
+                    getters = visibility;
+                    fields = visibility;
+                    break;
+            }
+            return construct(fields, getters, isGetters, setters, creators);
+        }
+
+        public static Value construct(Visibility fields, Visibility getters, Visibility isGetters, Visibility setters, Visibility creators) {
+            Value v = _predefined(fields, getters, isGetters, setters, creators);
+            if (v == null) {
+                v = new Value(fields, getters, isGetters, setters, creators);
+            }
+            return v;
+        }
+
+        public Value withFieldVisibility(Visibility v) {
+            return construct(v, this._getterVisibility, this._isGetterVisibility, this._setterVisibility, this._creatorVisibility);
+        }
+
+        public Value withGetterVisibility(Visibility v) {
+            return construct(this._fieldVisibility, v, this._isGetterVisibility, this._setterVisibility, this._creatorVisibility);
+        }
+
+        public Value withIsGetterVisibility(Visibility v) {
+            return construct(this._fieldVisibility, this._getterVisibility, v, this._setterVisibility, this._creatorVisibility);
+        }
+
+        public Value withSetterVisibility(Visibility v) {
+            return construct(this._fieldVisibility, this._getterVisibility, this._isGetterVisibility, v, this._creatorVisibility);
+        }
+
+        public Value withCreatorVisibility(Visibility v) {
+            return construct(this._fieldVisibility, this._getterVisibility, this._isGetterVisibility, this._setterVisibility, v);
+        }
+
+        public static Value merge(Value base, Value overrides) {
+            return base == null ? overrides : base.withOverrides(overrides);
+        }
+
+        public Value withOverrides(Value overrides) {
+            if (overrides == null || overrides == NO_OVERRIDES || overrides == this) {
+                return this;
+            }
+            if (_equals(this, overrides)) {
+                return this;
+            }
+            Visibility fields = overrides._fieldVisibility;
+            if (fields == Visibility.DEFAULT) {
+                fields = this._fieldVisibility;
+            }
+            Visibility getters = overrides._getterVisibility;
+            if (getters == Visibility.DEFAULT) {
+                getters = this._getterVisibility;
+            }
+            Visibility isGetters = overrides._isGetterVisibility;
+            if (isGetters == Visibility.DEFAULT) {
+                isGetters = this._isGetterVisibility;
+            }
+            Visibility setters = overrides._setterVisibility;
+            if (setters == Visibility.DEFAULT) {
+                setters = this._setterVisibility;
+            }
+            Visibility creators = overrides._creatorVisibility;
+            if (creators == Visibility.DEFAULT) {
+                creators = this._creatorVisibility;
+            }
+            return construct(fields, getters, isGetters, setters, creators);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.JacksonAnnotationValue
+        public Class<JsonAutoDetect> valueFor() {
+            return JsonAutoDetect.class;
+        }
+
+        public Visibility getFieldVisibility() {
+            return this._fieldVisibility;
+        }
+
+        public Visibility getGetterVisibility() {
+            return this._getterVisibility;
+        }
+
+        public Visibility getIsGetterVisibility() {
+            return this._isGetterVisibility;
+        }
+
+        public Visibility getSetterVisibility() {
+            return this._setterVisibility;
+        }
+
+        public Visibility getCreatorVisibility() {
+            return this._creatorVisibility;
+        }
+
+        protected Object readResolve() {
+            Value v = _predefined(this._fieldVisibility, this._getterVisibility, this._isGetterVisibility, this._setterVisibility, this._creatorVisibility);
+            return v == null ? this : v;
+        }
+
+        public String toString() {
+            return String.format("JsonAutoDetect.Value(fields=%s,getters=%s,isGetters=%s,setters=%s,creators=%s)", this._fieldVisibility, this._getterVisibility, this._isGetterVisibility, this._setterVisibility, this._creatorVisibility);
+        }
+
+        public int hashCode() {
+            return ((1 + this._fieldVisibility.ordinal()) ^ (((3 * this._getterVisibility.ordinal()) - (7 * this._isGetterVisibility.ordinal())) + (11 * this._setterVisibility.ordinal()))) ^ (13 * this._creatorVisibility.ordinal());
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            return o != null && o.getClass() == getClass() && _equals(this, (Value) o);
+        }
+
+        private static Value _predefined(Visibility fields, Visibility getters, Visibility isGetters, Visibility setters, Visibility creators) {
+            if (fields == DEFAULT_FIELD_VISIBILITY) {
+                if (getters == DEFAULT._getterVisibility && isGetters == DEFAULT._isGetterVisibility && setters == DEFAULT._setterVisibility && creators == DEFAULT._creatorVisibility) {
+                    return DEFAULT;
+                }
+                return null;
+            } else if (fields == Visibility.DEFAULT && getters == Visibility.DEFAULT && isGetters == Visibility.DEFAULT && setters == Visibility.DEFAULT && creators == Visibility.DEFAULT) {
+                return NO_OVERRIDES;
+            } else {
+                return null;
+            }
+        }
+
+        private static boolean _equals(Value a, Value b) {
+            return a._fieldVisibility == b._fieldVisibility && a._getterVisibility == b._getterVisibility && a._isGetterVisibility == b._isGetterVisibility && a._setterVisibility == b._setterVisibility && a._creatorVisibility == b._creatorVisibility;
+        }
+    }
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonBackReference.class */
+public @interface JsonBackReference {
+    String value() default "defaultReference";
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonClassDescription.class */
+public @interface JsonClassDescription {
+    String value() default "";
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonCreator.class */
+public @interface JsonCreator {
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonCreator$Mode.class */
+    public enum Mode {
+        DEFAULT,
+        DELEGATING,
+        PROPERTIES,
+        DISABLED
+    }
+
+    Mode mode() default Mode.DEFAULT;
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.FIELD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonEnumDefaultValue.class */
+public @interface JsonEnumDefaultValue {
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonFilter.class */
+public @interface JsonFilter {
+    String value();
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.Locale;
+import java.util.TimeZone;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonFormat.class */
+public @interface JsonFormat {
+    public static final String DEFAULT_LOCALE = "##default";
+    public static final String DEFAULT_TIMEZONE = "##default";
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonFormat$Feature.class */
+    public enum Feature {
+        ACCEPT_SINGLE_VALUE_AS_ARRAY,
+        ACCEPT_CASE_INSENSITIVE_PROPERTIES,
+        ACCEPT_CASE_INSENSITIVE_VALUES,
+        WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS,
+        WRITE_DATES_WITH_ZONE_ID,
+        WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED,
+        WRITE_SORTED_MAP_ENTRIES,
+        ADJUST_DATES_TO_CONTEXT_TIME_ZONE
+    }
+
+    String pattern() default "";
+
+    Shape shape() default Shape.ANY;
+
+    String locale() default "##default";
+
+    String timezone() default "##default";
+
+    OptBoolean lenient() default OptBoolean.DEFAULT;
+
+    Feature[] with() default {};
+
+    Feature[] without() default {};
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonFormat$Shape.class */
+    public enum Shape {
+        ANY,
+        NATURAL,
+        SCALAR,
+        ARRAY,
+        OBJECT,
+        NUMBER,
+        NUMBER_FLOAT,
+        NUMBER_INT,
+        STRING,
+        BOOLEAN,
+        BINARY;
+
+        public boolean isNumeric() {
+            return this == NUMBER || this == NUMBER_INT || this == NUMBER_FLOAT;
+        }
+
+        public boolean isStructured() {
+            return this == OBJECT || this == ARRAY;
+        }
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonFormat$Features.class */
+    public static class Features {
+        private final int _enabled;
+        private final int _disabled;
+        private static final Features EMPTY = new Features(0, 0);
+
+        private Features(int e, int d) {
+            this._enabled = e;
+            this._disabled = d;
+        }
+
+        public static Features empty() {
+            return EMPTY;
+        }
+
+        public static Features construct(JsonFormat f) {
+            return construct(f.with(), f.without());
+        }
+
+        public static Features construct(Feature[] enabled, Feature[] disabled) {
+            int e = 0;
+            for (Feature f : enabled) {
+                e |= 1 << f.ordinal();
+            }
+            int d = 0;
+            for (Feature f2 : disabled) {
+                d |= 1 << f2.ordinal();
+            }
+            return new Features(e, d);
+        }
+
+        public Features withOverrides(Features overrides) {
+            if (overrides == null) {
+                return this;
+            }
+            int overrideD = overrides._disabled;
+            int overrideE = overrides._enabled;
+            if (overrideD == 0 && overrideE == 0) {
+                return this;
+            }
+            if (this._enabled == 0 && this._disabled == 0) {
+                return overrides;
+            }
+            int newE = (this._enabled & (overrideD ^ (-1))) | overrideE;
+            int newD = (this._disabled & (overrideE ^ (-1))) | overrideD;
+            if (newE == this._enabled && newD == this._disabled) {
+                return this;
+            }
+            return new Features(newE, newD);
+        }
+
+        public Features with(Feature... features) {
+            int e = this._enabled;
+            for (Feature f : features) {
+                e |= 1 << f.ordinal();
+            }
+            return e == this._enabled ? this : new Features(e, this._disabled);
+        }
+
+        public Features without(Feature... features) {
+            int d = this._disabled;
+            for (Feature f : features) {
+                d |= 1 << f.ordinal();
+            }
+            return d == this._disabled ? this : new Features(this._enabled, d);
+        }
+
+        public Boolean get(Feature f) {
+            int mask = 1 << f.ordinal();
+            if ((this._disabled & mask) != 0) {
+                return Boolean.FALSE;
+            }
+            if ((this._enabled & mask) != 0) {
+                return Boolean.TRUE;
+            }
+            return null;
+        }
+
+        public String toString() {
+            if (this == EMPTY) {
+                return "EMPTY";
+            }
+            return String.format("(enabled=0x%x,disabled=0x%x)", Integer.valueOf(this._enabled), Integer.valueOf(this._disabled));
+        }
+
+        public int hashCode() {
+            return this._disabled + this._enabled;
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (o != null && o.getClass() == getClass()) {
+                Features other = (Features) o;
+                return other._enabled == this._enabled && other._disabled == this._disabled;
+            }
+            return false;
+        }
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonFormat$Value.class */
+    public static class Value implements JacksonAnnotationValue<JsonFormat>, Serializable {
+        private static final long serialVersionUID = 1;
+        private static final Value EMPTY = new Value();
+        private final String _pattern;
+        private final Shape _shape;
+        private final Locale _locale;
+        private final String _timezoneStr;
+        private final Boolean _lenient;
+        private final Features _features;
+        private transient TimeZone _timezone;
+
+        public Value() {
+            this(JsonProperty.USE_DEFAULT_NAME, Shape.ANY, JsonProperty.USE_DEFAULT_NAME, JsonProperty.USE_DEFAULT_NAME, Features.empty(), (Boolean) null);
+        }
+
+        public Value(JsonFormat ann) {
+            this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone(), Features.construct(ann), ann.lenient().asBoolean());
+        }
+
+        public Value(String p, Shape sh, String localeStr, String tzStr, Features f, Boolean lenient) {
+            this(p, sh, (localeStr == null || localeStr.length() == 0 || "##default".equals(localeStr)) ? null : new Locale(localeStr), (tzStr == null || tzStr.length() == 0 || "##default".equals(tzStr)) ? null : tzStr, null, f, lenient);
+        }
+
+        public Value(String p, Shape sh, Locale l, TimeZone tz, Features f, Boolean lenient) {
+            this._pattern = p == null ? JsonProperty.USE_DEFAULT_NAME : p;
+            this._shape = sh == null ? Shape.ANY : sh;
+            this._locale = l;
+            this._timezone = tz;
+            this._timezoneStr = null;
+            this._features = f == null ? Features.empty() : f;
+            this._lenient = lenient;
+        }
+
+        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f, Boolean lenient) {
+            this._pattern = p == null ? JsonProperty.USE_DEFAULT_NAME : p;
+            this._shape = sh == null ? Shape.ANY : sh;
+            this._locale = l;
+            this._timezone = tz;
+            this._timezoneStr = tzStr;
+            this._features = f == null ? Features.empty() : f;
+            this._lenient = lenient;
+        }
+
+        @Deprecated
+        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f) {
+            this(p, sh, l, tzStr, tz, f, null);
+        }
+
+        @Deprecated
+        public Value(String p, Shape sh, String localeStr, String tzStr, Features f) {
+            this(p, sh, localeStr, tzStr, f, (Boolean) null);
+        }
+
+        @Deprecated
+        public Value(String p, Shape sh, Locale l, TimeZone tz, Features f) {
+            this(p, sh, l, tz, f, (Boolean) null);
+        }
+
+        public static final Value empty() {
+            return EMPTY;
+        }
+
+        public static Value merge(Value base, Value overrides) {
+            return base == null ? overrides : base.withOverrides(overrides);
+        }
+
+        public static Value mergeAll(Value... values) {
+            Value result = null;
+            for (Value curr : values) {
+                if (curr != null) {
+                    result = result == null ? curr : result.withOverrides(curr);
+                }
+            }
+            return result;
+        }
+
+        public static final Value from(JsonFormat ann) {
+            return ann == null ? EMPTY : new Value(ann);
+        }
+
+        public final Value withOverrides(Value overrides) {
+            Features f;
+            TimeZone tz;
+            if (overrides == null || overrides == EMPTY || overrides == this) {
+                return this;
+            }
+            if (this == EMPTY) {
+                return overrides;
+            }
+            String p = overrides._pattern;
+            if (p == null || p.isEmpty()) {
+                p = this._pattern;
+            }
+            Shape sh = overrides._shape;
+            if (sh == Shape.ANY) {
+                sh = this._shape;
+            }
+            Locale l = overrides._locale;
+            if (l == null) {
+                l = this._locale;
+            }
+            Features f2 = this._features;
+            if (f2 == null) {
+                f = overrides._features;
+            } else {
+                f = f2.withOverrides(overrides._features);
+            }
+            Boolean lenient = overrides._lenient;
+            if (lenient == null) {
+                lenient = this._lenient;
+            }
+            String tzStr = overrides._timezoneStr;
+            if (tzStr == null || tzStr.isEmpty()) {
+                tzStr = this._timezoneStr;
+                tz = this._timezone;
+            } else {
+                tz = overrides._timezone;
+            }
+            return new Value(p, sh, l, tzStr, tz, f, lenient);
+        }
+
+        public static Value forPattern(String p) {
+            return new Value(p, null, null, null, null, Features.empty(), null);
+        }
+
+        public static Value forShape(Shape sh) {
+            return new Value(JsonProperty.USE_DEFAULT_NAME, sh, null, null, null, Features.empty(), null);
+        }
+
+        public static Value forLeniency(boolean lenient) {
+            return new Value(JsonProperty.USE_DEFAULT_NAME, null, null, null, null, Features.empty(), Boolean.valueOf(lenient));
+        }
+
+        public Value withPattern(String p) {
+            return new Value(p, this._shape, this._locale, this._timezoneStr, this._timezone, this._features, this._lenient);
+        }
+
+        public Value withShape(Shape s) {
+            if (s == this._shape) {
+                return this;
+            }
+            return new Value(this._pattern, s, this._locale, this._timezoneStr, this._timezone, this._features, this._lenient);
+        }
+
+        public Value withLocale(Locale l) {
+            return new Value(this._pattern, this._shape, l, this._timezoneStr, this._timezone, this._features, this._lenient);
+        }
+
+        public Value withTimeZone(TimeZone tz) {
+            return new Value(this._pattern, this._shape, this._locale, null, tz, this._features, this._lenient);
+        }
+
+        public Value withLenient(Boolean lenient) {
+            if (lenient == this._lenient) {
+                return this;
+            }
+            return new Value(this._pattern, this._shape, this._locale, this._timezoneStr, this._timezone, this._features, lenient);
+        }
+
+        public Value withFeature(Feature f) {
+            Features newFeats = this._features.with(f);
+            return newFeats == this._features ? this : new Value(this._pattern, this._shape, this._locale, this._timezoneStr, this._timezone, newFeats, this._lenient);
+        }
+
+        public Value withoutFeature(Feature f) {
+            Features newFeats = this._features.without(f);
+            return newFeats == this._features ? this : new Value(this._pattern, this._shape, this._locale, this._timezoneStr, this._timezone, newFeats, this._lenient);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.JacksonAnnotationValue
+        public Class<JsonFormat> valueFor() {
+            return JsonFormat.class;
+        }
+
+        public String getPattern() {
+            return this._pattern;
+        }
+
+        public Shape getShape() {
+            return this._shape;
+        }
+
+        public Locale getLocale() {
+            return this._locale;
+        }
+
+        public Boolean getLenient() {
+            return this._lenient;
+        }
+
+        public boolean isLenient() {
+            return Boolean.TRUE.equals(this._lenient);
+        }
+
+        public String timeZoneAsString() {
+            if (this._timezone != null) {
+                return this._timezone.getID();
+            }
+            return this._timezoneStr;
+        }
+
+        public TimeZone getTimeZone() {
+            TimeZone tz = this._timezone;
+            if (tz == null) {
+                if (this._timezoneStr == null) {
+                    return null;
+                }
+                tz = TimeZone.getTimeZone(this._timezoneStr);
+                this._timezone = tz;
+            }
+            return tz;
+        }
+
+        public boolean hasShape() {
+            return this._shape != Shape.ANY;
+        }
+
+        public boolean hasPattern() {
+            return this._pattern != null && this._pattern.length() > 0;
+        }
+
+        public boolean hasLocale() {
+            return this._locale != null;
+        }
+
+        public boolean hasTimeZone() {
+            return (this._timezone == null && (this._timezoneStr == null || this._timezoneStr.isEmpty())) ? false : true;
+        }
+
+        public boolean hasLenient() {
+            return this._lenient != null;
+        }
+
+        public Boolean getFeature(Feature f) {
+            return this._features.get(f);
+        }
+
+        public Features getFeatures() {
+            return this._features;
+        }
+
+        public String toString() {
+            return String.format("JsonFormat.Value(pattern=%s,shape=%s,lenient=%s,locale=%s,timezone=%s,features=%s)", this._pattern, this._shape, this._lenient, this._locale, this._timezoneStr, this._features);
+        }
+
+        public int hashCode() {
+            int hash = this._timezoneStr == null ? 1 : this._timezoneStr.hashCode();
+            if (this._pattern != null) {
+                hash ^= this._pattern.hashCode();
+            }
+            int hash2 = hash + this._shape.hashCode();
+            if (this._lenient != null) {
+                hash2 ^= this._lenient.hashCode();
+            }
+            if (this._locale != null) {
+                hash2 += this._locale.hashCode();
+            }
+            return hash2 ^ this._features.hashCode();
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (o != null && o.getClass() == getClass()) {
+                Value other = (Value) o;
+                return this._shape == other._shape && this._features.equals(other._features) && _equal(this._lenient, other._lenient) && _equal(this._timezoneStr, other._timezoneStr) && _equal(this._pattern, other._pattern) && _equal(this._timezone, other._timezone) && _equal(this._locale, other._locale);
+            }
+            return false;
+        }
+
+        private static <T> boolean _equal(T value1, T value2) {
+            if (value1 == null) {
+                return value2 == null;
+            } else if (value2 == null) {
+                return false;
+            } else {
+                return value1.equals(value2);
+            }
+        }
+    }
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonGetter.class */
+public @interface JsonGetter {
+    String value() default "";
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonIdentityInfo.class */
+public @interface JsonIdentityInfo {
+    String property() default "@id";
+
+    Class<? extends ObjectIdGenerator<?>> generator();
+
+    Class<? extends ObjectIdResolver> resolver() default SimpleObjectIdResolver.class;
+
+    Class<?> scope() default Object.class;
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonIdentityReference.class */
+public @interface JsonIdentityReference {
+    boolean alwaysAsId() default false;
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonIgnore.class */
+public @interface JsonIgnore {
+    boolean value() default true;
+}
+package com.fasterxml.jackson.annotation;
+
+import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonIgnoreProperties.class */
+public @interface JsonIgnoreProperties {
+    String[] value() default {};
+
+    boolean ignoreUnknown() default false;
+
+    boolean allowGetters() default false;
+
+    boolean allowSetters() default false;
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonIgnoreProperties$Value.class */
+    public static class Value implements JacksonAnnotationValue<JsonIgnoreProperties>, Serializable {
+        private static final long serialVersionUID = 1;
+        protected static final Value EMPTY = new Value(Collections.emptySet(), false, false, false, true);
+        protected final Set<String> _ignored;
+        protected final boolean _ignoreUnknown;
+        protected final boolean _allowGetters;
+        protected final boolean _allowSetters;
+        protected final boolean _merge;
+
+        protected Value(Set<String> ignored, boolean ignoreUnknown, boolean allowGetters, boolean allowSetters, boolean merge) {
+            if (ignored == null) {
+                this._ignored = Collections.emptySet();
+            } else {
+                this._ignored = ignored;
+            }
+            this._ignoreUnknown = ignoreUnknown;
+            this._allowGetters = allowGetters;
+            this._allowSetters = allowSetters;
+            this._merge = merge;
+        }
+
+        public static Value from(JsonIgnoreProperties src) {
+            if (src == null) {
+                return EMPTY;
+            }
+            return construct(_asSet(src.value()), src.ignoreUnknown(), src.allowGetters(), src.allowSetters(), false);
+        }
+
+        public static Value construct(Set<String> ignored, boolean ignoreUnknown, boolean allowGetters, boolean allowSetters, boolean merge) {
+            if (_empty(ignored, ignoreUnknown, allowGetters, allowSetters, merge)) {
+                return EMPTY;
+            }
+            return new Value(ignored, ignoreUnknown, allowGetters, allowSetters, merge);
+        }
+
+        public static Value empty() {
+            return EMPTY;
+        }
+
+        public static Value merge(Value base, Value overrides) {
+            return base == null ? overrides : base.withOverrides(overrides);
+        }
+
+        public static Value mergeAll(Value... values) {
+            Value result = null;
+            for (Value curr : values) {
+                if (curr != null) {
+                    result = result == null ? curr : result.withOverrides(curr);
+                }
+            }
+            return result;
+        }
+
+        public static Value forIgnoredProperties(Set<String> propNames) {
+            return EMPTY.withIgnored(propNames);
+        }
+
+        public static Value forIgnoredProperties(String... propNames) {
+            if (propNames.length == 0) {
+                return EMPTY;
+            }
+            return EMPTY.withIgnored(_asSet(propNames));
+        }
+
+        public static Value forIgnoreUnknown(boolean state) {
+            return state ? EMPTY.withIgnoreUnknown() : EMPTY.withoutIgnoreUnknown();
+        }
+
+        public Value withOverrides(Value overrides) {
+            if (overrides == null || overrides == EMPTY) {
+                return this;
+            }
+            if (!overrides._merge) {
+                return overrides;
+            }
+            if (_equals(this, overrides)) {
+                return this;
+            }
+            Set<String> ignored = _merge(this._ignored, overrides._ignored);
+            boolean ignoreUnknown = this._ignoreUnknown || overrides._ignoreUnknown;
+            boolean allowGetters = this._allowGetters || overrides._allowGetters;
+            boolean allowSetters = this._allowSetters || overrides._allowSetters;
+            return construct(ignored, ignoreUnknown, allowGetters, allowSetters, true);
+        }
+
+        public Value withIgnored(Set<String> ignored) {
+            return construct(ignored, this._ignoreUnknown, this._allowGetters, this._allowSetters, this._merge);
+        }
+
+        public Value withIgnored(String... ignored) {
+            return construct(_asSet(ignored), this._ignoreUnknown, this._allowGetters, this._allowSetters, this._merge);
+        }
+
+        public Value withoutIgnored() {
+            return construct(null, this._ignoreUnknown, this._allowGetters, this._allowSetters, this._merge);
+        }
+
+        public Value withIgnoreUnknown() {
+            return this._ignoreUnknown ? this : construct(this._ignored, true, this._allowGetters, this._allowSetters, this._merge);
+        }
+
+        public Value withoutIgnoreUnknown() {
+            return !this._ignoreUnknown ? this : construct(this._ignored, false, this._allowGetters, this._allowSetters, this._merge);
+        }
+
+        public Value withAllowGetters() {
+            return this._allowGetters ? this : construct(this._ignored, this._ignoreUnknown, true, this._allowSetters, this._merge);
+        }
+
+        public Value withoutAllowGetters() {
+            return !this._allowGetters ? this : construct(this._ignored, this._ignoreUnknown, false, this._allowSetters, this._merge);
+        }
+
+        public Value withAllowSetters() {
+            return this._allowSetters ? this : construct(this._ignored, this._ignoreUnknown, this._allowGetters, true, this._merge);
+        }
+
+        public Value withoutAllowSetters() {
+            return !this._allowSetters ? this : construct(this._ignored, this._ignoreUnknown, this._allowGetters, false, this._merge);
+        }
+
+        public Value withMerge() {
+            return this._merge ? this : construct(this._ignored, this._ignoreUnknown, this._allowGetters, this._allowSetters, true);
+        }
+
+        public Value withoutMerge() {
+            return !this._merge ? this : construct(this._ignored, this._ignoreUnknown, this._allowGetters, this._allowSetters, false);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.JacksonAnnotationValue
+        public Class<JsonIgnoreProperties> valueFor() {
+            return JsonIgnoreProperties.class;
+        }
+
+        protected Object readResolve() {
+            if (_empty(this._ignored, this._ignoreUnknown, this._allowGetters, this._allowSetters, this._merge)) {
+                return EMPTY;
+            }
+            return this;
+        }
+
+        public Set<String> getIgnored() {
+            return this._ignored;
+        }
+
+        public Set<String> findIgnoredForSerialization() {
+            if (this._allowGetters) {
+                return Collections.emptySet();
+            }
+            return this._ignored;
+        }
+
+        public Set<String> findIgnoredForDeserialization() {
+            if (this._allowSetters) {
+                return Collections.emptySet();
+            }
+            return this._ignored;
+        }
+
+        public boolean getIgnoreUnknown() {
+            return this._ignoreUnknown;
+        }
+
+        public boolean getAllowGetters() {
+            return this._allowGetters;
+        }
+
+        public boolean getAllowSetters() {
+            return this._allowSetters;
+        }
+
+        public boolean getMerge() {
+            return this._merge;
+        }
+
+        public String toString() {
+            return String.format("JsonIgnoreProperties.Value(ignored=%s,ignoreUnknown=%s,allowGetters=%s,allowSetters=%s,merge=%s)", this._ignored, Boolean.valueOf(this._ignoreUnknown), Boolean.valueOf(this._allowGetters), Boolean.valueOf(this._allowSetters), Boolean.valueOf(this._merge));
+        }
+
+        public int hashCode() {
+            return this._ignored.size() + (this._ignoreUnknown ? 1 : -3) + (this._allowGetters ? 3 : -7) + (this._allowSetters ? 7 : -11) + (this._merge ? 11 : -13);
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            return o != null && o.getClass() == getClass() && _equals(this, (Value) o);
+        }
+
+        private static boolean _equals(Value a, Value b) {
+            return a._ignoreUnknown == b._ignoreUnknown && a._merge == b._merge && a._allowGetters == b._allowGetters && a._allowSetters == b._allowSetters && a._ignored.equals(b._ignored);
+        }
+
+        private static Set<String> _asSet(String[] v) {
+            if (v == null || v.length == 0) {
+                return Collections.emptySet();
+            }
+            Set<String> s = new HashSet<>(v.length);
+            for (String str : v) {
+                s.add(str);
+            }
+            return s;
+        }
+
+        private static Set<String> _merge(Set<String> s1, Set<String> s2) {
+            if (s1.isEmpty()) {
+                return s2;
+            }
+            if (s2.isEmpty()) {
+                return s1;
+            }
+            HashSet<String> result = new HashSet<>(s1.size() + s2.size());
+            result.addAll(s1);
+            result.addAll(s2);
+            return result;
+        }
+
+        private static boolean _empty(Set<String> ignored, boolean ignoreUnknown, boolean allowGetters, boolean allowSetters, boolean merge) {
+            if (ignoreUnknown == EMPTY._ignoreUnknown && allowGetters == EMPTY._allowGetters && allowSetters == EMPTY._allowSetters && merge == EMPTY._merge) {
+                return ignored == null || ignored.size() == 0;
+            }
+            return false;package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonIgnoreType.class */
+public @interface JsonIgnoreType {
+    boolean value() default true;
+}
+        }
+    }
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.TYPE, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonInclude.class */
+public @interface JsonInclude {
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonInclude$Include.class */
+    public enum Include {
+        ALWAYS,
+        NON_NULL,
+        NON_ABSENT,
+        NON_EMPTY,
+        NON_DEFAULT,
+        CUSTOM,
+        USE_DEFAULTS
+    }
+
+    Include value() default Include.ALWAYS;
+
+    Include content() default Include.ALWAYS;
+
+    Class<?> valueFilter() default Void.class;
+
+    Class<?> contentFilter() default Void.class;
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonInclude$Value.class */
+    public static class Value implements JacksonAnnotationValue<JsonInclude>, Serializable {
+        private static final long serialVersionUID = 1;
+        protected static final Value EMPTY = new Value(Include.USE_DEFAULTS, Include.USE_DEFAULTS, null, null);
+        protected final Include _valueInclusion;
+        protected final Include _contentInclusion;
+        protected final Class<?> _valueFilter;
+        protected final Class<?> _contentFilter;
+
+        public Value(JsonInclude src) {
+            this(src.value(), src.content(), src.valueFilter(), src.contentFilter());
+        }
+
+        protected Value(Include vi, Include ci, Class<?> valueFilter, Class<?> contentFilter) {
+            this._valueInclusion = vi == null ? Include.USE_DEFAULTS : vi;
+            this._contentInclusion = ci == null ? Include.USE_DEFAULTS : ci;
+            this._valueFilter = valueFilter == Void.class ? null : valueFilter;
+            this._contentFilter = contentFilter == Void.class ? null : contentFilter;
+        }
+
+        public static Value empty() {
+            return EMPTY;
+        }
+
+        public static Value merge(Value base, Value overrides) {
+            return base == null ? overrides : base.withOverrides(overrides);
+        }
+
+        public static Value mergeAll(Value... values) {
+            Value result = null;
+            for (Value curr : values) {
+                if (curr != null) {
+                    result = result == null ? curr : result.withOverrides(curr);
+                }
+            }
+            return result;
+        }
+
+        protected Object readResolve() {
+            if (this._valueInclusion == Include.USE_DEFAULTS && this._contentInclusion == Include.USE_DEFAULTS && this._valueFilter == null && this._contentFilter == null) {
+                return EMPTY;
+            }
+            return this;
+        }
+
+        public Value withOverrides(Value overrides) {
+            if (overrides == null || overrides == EMPTY) {
+                return this;
+            }
+            Include vi = overrides._valueInclusion;
+            Include ci = overrides._contentInclusion;
+            Class<?> vf = overrides._valueFilter;
+            Class<?> cf = overrides._contentFilter;
+            boolean viDiff = (vi == this._valueInclusion || vi == Include.USE_DEFAULTS) ? false : true;
+            boolean ciDiff = (ci == this._contentInclusion || ci == Include.USE_DEFAULTS) ? false : true;
+            boolean filterDiff = (vf == this._valueFilter && cf == this._valueFilter) ? false : true;
+            if (viDiff) {
+                if (ciDiff) {
+                    return new Value(vi, ci, vf, cf);
+                }
+                return new Value(vi, this._contentInclusion, vf, cf);
+            } else if (ciDiff) {
+                return new Value(this._valueInclusion, ci, vf, cf);
+            } else {
+                if (filterDiff) {
+                    return new Value(this._valueInclusion, this._contentInclusion, vf, cf);
+                }
+                return this;
+            }
+        }
+
+        public static Value construct(Include valueIncl, Include contentIncl) {
+            if ((valueIncl == Include.USE_DEFAULTS || valueIncl == null) && (contentIncl == Include.USE_DEFAULTS || contentIncl == null)) {
+                return EMPTY;
+            }
+            return new Value(valueIncl, contentIncl, null, null);
+        }
+
+        public static Value construct(Include valueIncl, Include contentIncl, Class<?> valueFilter, Class<?> contentFilter) {
+            if (valueFilter == Void.class) {
+                valueFilter = null;
+            }
+            if (contentFilter == Void.class) {
+                contentFilter = null;
+            }
+            if ((valueIncl == Include.USE_DEFAULTS || valueIncl == null) && ((contentIncl == Include.USE_DEFAULTS || contentIncl == null) && valueFilter == null && contentFilter == null)) {
+                return EMPTY;
+            }
+            return new Value(valueIncl, contentIncl, valueFilter, contentFilter);
+        }
+
+        public static Value from(JsonInclude src) {
+            if (src == null) {
+                return EMPTY;
+            }
+            Include vi = src.value();
+            Include ci = src.content();
+            if (vi == Include.USE_DEFAULTS && ci == Include.USE_DEFAULTS) {
+                return EMPTY;
+            }
+            Class<?> vf = src.valueFilter();
+            if (vf == Void.class) {
+                vf = null;
+            }
+            Class<?> cf = src.contentFilter();
+            if (cf == Void.class) {
+                cf = null;
+            }
+            return new Value(vi, ci, vf, cf);
+        }
+
+        public Value withValueInclusion(Include incl) {
+            return incl == this._valueInclusion ? this : new Value(incl, this._contentInclusion, this._valueFilter, this._contentFilter);
+        }
+
+        public Value withValueFilter(Class<?> filter) {
+            Include incl;
+            if (filter == null || filter == Void.class) {
+                incl = Include.USE_DEFAULTS;
+                filter = null;
+            } else {
+                incl = Include.CUSTOM;
+            }
+            return construct(incl, this._contentInclusion, filter, this._contentFilter);
+        }
+
+        public Value withContentFilter(Class<?> filter) {
+            Include incl;
+            if (filter == null || filter == Void.class) {
+                incl = Include.USE_DEFAULTS;
+                filter = null;
+            } else {
+                incl = Include.CUSTOM;
+            }
+            return construct(this._valueInclusion, incl, this._valueFilter, filter);
+        }
+
+        public Value withContentInclusion(Include incl) {
+            return incl == this._contentInclusion ? this : new Value(this._valueInclusion, incl, this._valueFilter, this._contentFilter);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.JacksonAnnotationValue
+        public Class<JsonInclude> valueFor() {
+            return JsonInclude.class;
+        }
+
+        public Include getValueInclusion() {
+            return this._valueInclusion;
+        }
+
+        public Include getContentInclusion() {
+            return this._contentInclusion;
+        }
+
+        public Class<?> getValueFilter() {
+            return this._valueFilter;
+        }
+
+        public Class<?> getContentFilter() {
+            return this._contentFilter;
+        }
+
+        public String toString() {
+            StringBuilder sb = new StringBuilder(80);
+            sb.append("JsonInclude.Value(value=").append(this._valueInclusion).append(",content=").append(this._contentInclusion);
+            if (this._valueFilter != null) {
+                sb.append(",valueFilter=").append(this._valueFilter.getName()).append(".class");
+            }
+            if (this._contentFilter != null) {
+                sb.append(",contentFilter=").append(this._contentFilter.getName()).append(".class");
+            }
+            return sb.append(')').toString();
+        }
+
+        public int hashCode() {
+            return (this._valueInclusion.hashCode() << 2) + this._contentInclusion.hashCode();
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (o != null && o.getClass() == getClass()) {
+                Value other = (Value) o;
+                return other._valueInclusion == this._valueInclusion && other._contentInclusion == this._contentInclusion && other._valueFilter == this._valueFilter && other._contentFilter == this._contentFilter;
+            }
+            return false;
+        }
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonManagedReference.class */
+public @interface JsonManagedReference {
+    String value() default "defaultReference";
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonMerge.class */
+public @interface JsonMerge {
+    OptBoolean value() default OptBoolean.TRUE;
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonProperty.class */
+public @interface JsonProperty {
+    public static final String USE_DEFAULT_NAME = "";
+    public static final int INDEX_UNKNOWN = -1;
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonProperty$Access.class */
+    public enum Access {
+        AUTO,
+        READ_ONLY,
+        WRITE_ONLY,
+        READ_WRITE
+    }
+
+    String value() default "";
+
+    boolean required() default false;
+
+    int index() default -1;
+
+    String defaultValue() default "";
+
+    Access access() default Access.AUTO;
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonPropertyDescription.class */
+public @interface JsonPropertyDescription {
+    String value() default "";
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonPropertyOrder.class */
+public @interface JsonPropertyOrder {
+    String[] value() default {};
+
+    boolean alphabetic() default false;
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonRawValue.class */
+public @interface JsonRawValue {
+    boolean value() default true;package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonRootName.class */
+public @interface JsonRootName {
+    String value();
+
+    String namespace() default "";
+}
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonSetter.class */
+public @interface JsonSetter {
+    String value() default "";
+
+    Nulls nulls() default Nulls.DEFAULT;
+
+    Nulls contentNulls() default Nulls.DEFAULT;
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonSetter$Value.class */
+    public static class Value implements JacksonAnnotationValue<JsonSetter>, Serializable {
+        private static final long serialVersionUID = 1;
+        private final Nulls _nulls;
+        private final Nulls _contentNulls;
+        protected static final Value EMPTY = new Value(Nulls.DEFAULT, Nulls.DEFAULT);
+
+        protected Value(Nulls nulls, Nulls contentNulls) {
+            this._nulls = nulls;
+            this._contentNulls = contentNulls;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.JacksonAnnotationValue
+        public Class<JsonSetter> valueFor() {
+            return JsonSetter.class;
+        }
+
+        protected Object readResolve() {
+            if (_empty(this._nulls, this._contentNulls)) {
+                return EMPTY;
+            }
+            return this;
+        }
+
+        public static Value from(JsonSetter src) {
+            if (src == null) {
+                return EMPTY;
+            }
+            return construct(src.nulls(), src.contentNulls());
+        }
+
+        public static Value construct(Nulls nulls, Nulls contentNulls) {
+            if (nulls == null) {
+                nulls = Nulls.DEFAULT;
+            }
+            if (contentNulls == null) {
+                contentNulls = Nulls.DEFAULT;
+            }
+            if (_empty(nulls, contentNulls)) {
+                return EMPTY;
+            }
+            return new Value(nulls, contentNulls);
+        }
+
+        public static Value empty() {
+            return EMPTY;
+        }
+
+        public static Value merge(Value base, Value overrides) {
+            return base == null ? overrides : base.withOverrides(overrides);
+        }
+
+        public static Value forValueNulls(Nulls nulls) {
+            return construct(nulls, Nulls.DEFAULT);
+        }
+
+        public static Value forValueNulls(Nulls nulls, Nulls contentNulls) {
+            return construct(nulls, contentNulls);
+        }
+
+        public static Value forContentNulls(Nulls nulls) {
+            return construct(Nulls.DEFAULT, nulls);
+        }
+
+        public Value withOverrides(Value overrides) {
+            if (overrides == null || overrides == EMPTY) {
+                return this;
+            }
+            Nulls nulls = overrides._nulls;
+            Nulls contentNulls = overrides._contentNulls;
+            if (nulls == Nulls.DEFAULT) {
+                nulls = this._nulls;
+            }
+            if (contentNulls == Nulls.DEFAULT) {
+                contentNulls = this._contentNulls;
+            }
+            if (nulls == this._nulls && contentNulls == this._contentNulls) {
+                return this;
+            }
+            return construct(nulls, contentNulls);
+        }
+
+        public Value withValueNulls(Nulls nulls) {
+            if (nulls == null) {
+                nulls = Nulls.DEFAULT;
+            }
+            if (nulls == this._nulls) {
+                return this;
+            }
+            return construct(nulls, this._contentNulls);
+        }
+
+        public Value withValueNulls(Nulls valueNulls, Nulls contentNulls) {
+            if (valueNulls == null) {
+                valueNulls = Nulls.DEFAULT;
+            }
+            if (contentNulls == null) {
+                contentNulls = Nulls.DEFAULT;
+            }
+            if (valueNulls == this._nulls && contentNulls == this._contentNulls) {
+                return this;
+            }
+            return construct(valueNulls, contentNulls);
+        }
+
+        public Value withContentNulls(Nulls nulls) {
+            if (nulls == null) {
+                nulls = Nulls.DEFAULT;
+            }
+            if (nulls == this._contentNulls) {
+                return this;
+            }
+            return construct(this._nulls, nulls);
+        }
+
+        public Nulls getValueNulls() {
+            return this._nulls;
+        }
+
+        public Nulls getContentNulls() {
+            return this._contentNulls;
+        }
+
+        public Nulls nonDefaultValueNulls() {
+            if (this._nulls == Nulls.DEFAULT) {
+                return null;
+            }
+            return this._nulls;
+        }
+
+        public Nulls nonDefaultContentNulls() {
+            if (this._contentNulls == Nulls.DEFAULT) {
+                return null;
+            }
+            return this._contentNulls;
+        }
+
+        public String toString() {
+            return String.format("JsonSetter.Value(valueNulls=%s,contentNulls=%s)", this._nulls, this._contentNulls);
+        }
+
+        public int hashCode() {
+            return this._nulls.ordinal() + (this._contentNulls.ordinal() << 2);
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (o != null && o.getClass() == getClass()) {
+                Value other = (Value) o;
+                return other._nulls == this._nulls && other._contentNulls == this._contentNulls;
+            }
+            return false;
+        }
+
+        private static boolean _empty(Nulls nulls, Nulls contentNulls) {
+            return nulls == Nulls.DEFAULT && contentNulls == Nulls.DEFAULT;
+        }
+    }
+}
+
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonSubTypes.class */
+public @interface JsonSubTypes {
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonSubTypes$Type.class */
+    public @interface Type {
+        Class<?> value();
+
+        String name() default "";
+    }
+
+    Type[] value();
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonTypeId.class */
+public @interface JsonTypeId {
+}
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonTypeInfo.class */
+public @interface JsonTypeInfo {
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonTypeInfo$As.class */
+    public enum As {
+        PROPERTY,
+        WRAPPER_OBJECT,
+        WRAPPER_ARRAY,
+        EXTERNAL_PROPERTY,
+        EXISTING_PROPERTY
+    }
+
+    @Deprecated
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonTypeInfo$None.class */
+    public static abstract class None {
+    }
+
+    Id use();
+
+    As include() default As.PROPERTY;
+
+    String property() default "";
+
+    Class<?> defaultImpl() default JsonTypeInfo.class;
+
+    boolean visible() default false;
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonTypeInfo$Id.class */
+    public enum Id {
+        NONE(null),
+        CLASS("@class"),
+        MINIMAL_CLASS("@c"),
+        NAME("@type"),
+        CUSTOM(null);
+        
+        private final String _defaultPropertyName;
+
+        Id(String defProp) {
+            this._defaultPropertyName = defProp;
+        }
+
+        public String getDefaultPropertyName() {
+            return this._defaultPropertyName;
+        }
+    }
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonTypeName.class */
+public @interface JsonTypeName {
+    String value() default "";
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonUnwrapped.class */
+public @interface JsonUnwrapped {
+    boolean enabled() default true;
+
+    String prefix() default "";
+
+    String suffix() default "";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
+@JacksonAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/JsonView.class */
+public @interface JsonView {
+    Class<?>[] value() default {};
+}
+
+package com.fasterxml.jackson.annotation;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/Nulls.class */
+public enum Nulls {
+    SET,
+    SKIP,
+    FAIL,
+    AS_EMPTY,
+    DEFAULT
+}
+
+package com.fasterxml.jackson.annotation;
+
+import java.io.Serializable;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerator.class */
+public abstract class ObjectIdGenerator<T> implements Serializable {
+    public abstract Class<?> getScope();
+
+    public abstract boolean canUseFor(ObjectIdGenerator<?> objectIdGenerator);
+
+    public abstract ObjectIdGenerator<T> forScope(Class<?> cls);
+
+    public abstract ObjectIdGenerator<T> newForSerialization(Object obj);
+
+    public abstract IdKey key(Object obj);
+
+    public abstract T generateId(Object obj);
+
+    public boolean maySerializeAsObject() {
+        return false;
+    }
+
+    public boolean isValidReferencePropertyName(String name, Object parser) {
+        return false;
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerator$IdKey.class */
+    public static final class IdKey implements Serializable {
+        private static final long serialVersionUID = 1;
+        public final Class<?> type;
+        public final Class<?> scope;
+        public final Object key;
+        private final int hashCode;
+
+        public IdKey(Class<?> type, Class<?> scope, Object key) {
+            if (key == null) {
+                throw new IllegalArgumentException("Can not construct IdKey for null key");
+            }
+            this.type = type;
+            this.scope = scope;
+            this.key = key;
+            int h = key.hashCode() + type.getName().hashCode();
+            this.hashCode = scope != null ? h ^ scope.getName().hashCode() : h;
+        }
+
+        public int hashCode() {
+            return this.hashCode;
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (o != null && o.getClass() == getClass()) {
+                IdKey other = (IdKey) o;
+                return other.key.equals(this.key) && other.type == this.type && other.scope == this.scope;
+            }
+            return false;
+        }
+
+        public String toString() {
+            Object[] objArr = new Object[3];
+            objArr[0] = this.key;
+            objArr[1] = this.type == null ? "NONE" : this.type.getName();
+            objArr[2] = this.scope == null ? "NONE" : this.scope.getName();
+            return String.format("[ObjectId: key=%s, type=%s, scope=%s]", objArr);
+        }
+    }
+}
+package com.fasterxml.jackson.annotation;
+
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import java.util.UUID;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerators.class */
+public class ObjectIdGenerators {
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerators$None.class */
+    public static abstract class None extends ObjectIdGenerator<Object> {
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerators$Base.class */
+    private static abstract class Base<T> extends ObjectIdGenerator<T> {
+        protected final Class<?> _scope;
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public abstract T generateId(Object obj);
+
+        protected Base(Class<?> scope) {
+            this._scope = scope;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public final Class<?> getScope() {
+            return this._scope;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public boolean canUseFor(ObjectIdGenerator<?> gen) {
+            return gen.getClass() == getClass() && gen.getScope() == this._scope;
+        }
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerators$PropertyGenerator.class */
+    public static abstract class PropertyGenerator extends Base<Object> {
+        private static final long serialVersionUID = 1;
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerators.Base, com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public /* bridge */ /* synthetic */ boolean canUseFor(ObjectIdGenerator objectIdGenerator) {
+            return super.canUseFor(objectIdGenerator);
+        }
+
+        protected PropertyGenerator(Class<?> scope) {
+            super(scope);
+        }
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerators$IntSequenceGenerator.class */
+    public static final class IntSequenceGenerator extends Base<Integer> {
+        private static final long serialVersionUID = 1;
+        protected transient int _nextValue;
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerators.Base, com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public /* bridge */ /* synthetic */ boolean canUseFor(ObjectIdGenerator objectIdGenerator) {
+            return super.canUseFor(objectIdGenerator);
+        }
+
+        public IntSequenceGenerator() {
+            this(Object.class, -1);
+        }
+
+        public IntSequenceGenerator(Class<?> scope, int fv) {
+            super(scope);
+            this._nextValue = fv;
+        }
+
+        protected int initialValue() {
+            return 1;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator<Integer> forScope(Class<?> scope) {
+            return this._scope == scope ? this : new IntSequenceGenerator(scope, this._nextValue);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator<Integer> newForSerialization(Object context) {
+            return new IntSequenceGenerator(this._scope, initialValue());
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator.IdKey key(Object key) {
+            if (key == null) {
+                return null;
+            }
+            return new ObjectIdGenerator.IdKey(getClass(), this._scope, key);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerators.Base, com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public Integer generateId(Object forPojo) {
+            if (forPojo == null) {
+                return null;
+            }
+            int id = this._nextValue;
+            this._nextValue++;
+            return Integer.valueOf(id);
+        }
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerators$UUIDGenerator.class */
+    public static final class UUIDGenerator extends Base<UUID> {
+        private static final long serialVersionUID = 1;
+
+        public UUIDGenerator() {
+            this(Object.class);
+        }
+
+        private UUIDGenerator(Class<?> scope) {
+            super(Object.class);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator<UUID> forScope(Class<?> scope) {
+            return this;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator<UUID> newForSerialization(Object context) {
+            return this;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerators.Base, com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public UUID generateId(Object forPojo) {
+            return UUID.randomUUID();
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator.IdKey key(Object key) {
+            if (key == null) {
+                return null;
+            }
+            return new ObjectIdGenerator.IdKey(getClass(), null, key);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerators.Base, com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public boolean canUseFor(ObjectIdGenerator<?> gen) {
+            return gen.getClass() == getClass();
+        }
+    }
+
+    /* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdGenerators$StringIdGenerator.class */
+    public static final class StringIdGenerator extends Base<String> {
+        private static final long serialVersionUID = 1;
+
+        public StringIdGenerator() {
+            this(Object.class);
+        }
+
+        private StringIdGenerator(Class<?> scope) {
+            super(Object.class);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator<String> forScope(Class<?> scope) {
+            return this;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator<String> newForSerialization(Object context) {
+            return this;
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerators.Base, com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public String generateId(Object forPojo) {
+            return UUID.randomUUID().toString();
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public ObjectIdGenerator.IdKey key(Object key) {
+            if (key == null) {
+                return null;
+            }
+            return new ObjectIdGenerator.IdKey(getClass(), null, key);
+        }
+
+        @Override // com.fasterxml.jackson.annotation.ObjectIdGenerators.Base, com.fasterxml.jackson.annotation.ObjectIdGenerator
+        public boolean canUseFor(ObjectIdGenerator<?> gen) {
+            return gen instanceof StringIdGenerator;
+        }
+    }
+}
+
+package com.fasterxml.jackson.annotation;
+
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/ObjectIdResolver.class */
+public interface ObjectIdResolver {
+    void bindItem(ObjectIdGenerator.IdKey idKey, Object obj);
+
+    Object resolveId(ObjectIdGenerator.IdKey idKey);
+
+    ObjectIdResolver newForDeserialization(Object obj);
+
+    boolean canUseFor(ObjectIdResolver objectIdResolver);
+}
+package com.fasterxml.jackson.annotation;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/OptBoolean.class */
+public enum OptBoolean {
+    TRUE,
+    FALSE,
+    DEFAULT;
+
+    public Boolean asBoolean() {
+        if (this == DEFAULT) {
+            return null;
+        }
+        return this == TRUE ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    public boolean asPrimitive() {
+        return this == TRUE;
+    }
+
+    public static OptBoolean fromBoolean(Boolean b) {
+        if (b == null) {
+            return DEFAULT;
+        }
+        return b.booleanValue() ? TRUE : FALSE;
+    }
+
+    public static boolean equals(Boolean b1, Boolean b2) {
+        if (b1 == null) {
+            return b2 == null;
+        }
+        return b1.equals(b2);
+    }
+}
+
+package com.fasterxml.jackson.annotation;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/PropertyAccessor.class */
+public enum PropertyAccessor {
+    GETTER,
+    SETTER,
+    CREATOR,
+    FIELD,
+    IS_GETTER,
+    NONE,
+    ALL;
+
+    public boolean creatorEnabled() {
+        return this == CREATOR || this == ALL;
+    }
+
+    public boolean getterEnabled() {
+        return this == GETTER || this == ALL;
+    }
+
+    public boolean isGetterEnabled() {
+        return this == IS_GETTER || this == ALL;
+    }
+
+    public boolean setterEnabled() {
+        return this == SETTER || this == ALL;
+    }
+
+    public boolean fieldEnabled() {
+        return this == FIELD || this == ALL;
+    }
+}
+
+package com.fasterxml.jackson.annotation;
+
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import java.util.HashMap;
+import java.util.Map;
+
+/* loaded from: jackson-annotations-2.11.3.jar:com/fasterxml/jackson/annotation/SimpleObjectIdResolver.class */
+public class SimpleObjectIdResolver implements ObjectIdResolver {
+    protected Map<ObjectIdGenerator.IdKey, Object> _items;
+
+    @Override // com.fasterxml.jackson.annotation.ObjectIdResolver
+    public void bindItem(ObjectIdGenerator.IdKey id, Object ob) {
+        if (this._items == null) {
+            this._items = new HashMap();
+        } else if (this._items.containsKey(id)) {
+            throw new IllegalStateException("Already had POJO for id (" + id.key.getClass().getName() + ") [" + id + "]");
+        }
+        this._items.put(id, ob);
+    }
+
+    @Override // com.fasterxml.jackson.annotation.ObjectIdResolver
+    public Object resolveId(ObjectIdGenerator.IdKey id) {
+        if (this._items == null) {
+            return null;
+        }
+        return this._items.get(id);
+    }
+
+    @Override // com.fasterxml.jackson.annotation.ObjectIdResolver
+    public boolean canUseFor(ObjectIdResolver resolverType) {
+        return resolverType.getClass() == getClass();
+    }
+
+    @Override // com.fasterxml.jackson.annotation.ObjectIdResolver
+    public ObjectIdResolver newForDeserialization(Object context) {
+        return new SimpleObjectIdResolver();
+    }
+}
+
+package defpackage;
+
+/* JADX WARN: Modules not supported yet */
+/* renamed from: module-info  reason: invalid class name and default package */
+/* loaded from: jackson-annotations-2.11.3.jar:module-info.class */
+/* module-info */ class moduleinfo {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
